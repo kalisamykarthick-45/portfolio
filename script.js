@@ -1,86 +1,116 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-  const menuToggle = document.getElementById("menuToggle");
-  const mobileNav = document.getElementById("mobileNav");
+    // MOBILE MENU
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeBtn = document.getElementById('closeBtn');
 
-  if (!menuToggle || !mobileNav) {
-    console.error("menuToggle or mobileNav not found");
-    return;
-  }
+    if(menuToggle && mobileNav && closeBtn){
 
-  // toggle menu
-  menuToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    mobileNav.classList.toggle("active");
-  });
+        // OPEN MENU
+        menuToggle.addEventListener('click', () => {
 
-  // close when clicking menu link
-  mobileNav.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      mobileNav.classList.remove("active");
-    });
-  });
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
 
-  // close when clicking outside
-  document.addEventListener("click", (e) => {
-    if (
-      mobileNav.classList.contains("active") &&
-      !mobileNav.contains(e.target) &&
-      !menuToggle.contains(e.target)
-    ) {
-      mobileNav.classList.remove("active");
+        });
+
+        // CLOSE MENU
+        closeBtn.addEventListener('click', () => {
+
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = 'auto';
+
+        });
+
+        
+        const navLinks = mobileNav.querySelectorAll('a');
+
+        navLinks.forEach(link => {
+
+            link.addEventListener('click', () => {
+
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+
+            });
+
+        });
+
     }
-  });
 
-  // close on resize to desktop
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) {
-      mobileNav.classList.remove("active");
+
+    // CONTACT FORM
+    const form = document.getElementById("contactForm");
+
+    if(form){
+
+        const button = form.querySelector("button");
+
+        form.addEventListener("submit", (e) => {
+
+            e.preventDefault();
+
+            button.classList.add("loading");
+
+            setTimeout(() => {
+
+                button.classList.remove("loading");
+                button.classList.add("success");
+
+                button.textContent = "Message Sent ✔";
+
+                form.reset();
+
+            }, 2000);
+
+        });
+
     }
-  });
 
 });
 
 
-
-
-  const form = document.getElementById("contactForm");
-  const button = form.querySelector("button");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    button.classList.add("loading");
-
-    setTimeout(() => {
-      button.classList.remove("loading");
-      button.classList.add("success");
-      button.textContent = "Message Sent ✔";
-      form.reset();
-    }, 2000);
-  });
-
-
-
-
+// CERTIFICATE MODAL
 
 function openCert(imgSrc) {
-  const modal = document.getElementById("certModal");
-  const modalImg = document.getElementById("certImg");
-  modal.style.display = "flex";
-  modalImg.src = imgSrc;
-  document.body.style.overflow = "hidden";
+
+    const modal = document.getElementById("certModal");
+    const modalImg = document.getElementById("certImg");
+
+    if(modal && modalImg){
+
+        modal.style.display = "flex";
+        modalImg.src = imgSrc;
+
+        document.body.style.overflow = "hidden";
+
+    }
+
 }
 
 function closeCert() {
-  const modal = document.getElementById("certModal");
-  modal.style.display = "none";
-  document.body.style.overflow = "auto"; 
+
+    const modal = document.getElementById("certModal");
+
+    if(modal){
+
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+
+    }
+
 }
 
-// Close on 'Esc' key
+
+// ESC CLOSE
+
 document.addEventListener('keydown', (e) => {
-  if (e.key === "Escape") closeCert();
+
+    if (e.key === "Escape") {
+
+        closeCert();
+
+    }
+
 });
-
-
